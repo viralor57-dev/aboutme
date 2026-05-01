@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Лера | КИНН + LOVE LIST</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #1a0b1a, #0a050f);
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, monospace;
+            color: #ffeef8;
+            padding: 1.5rem;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(28, 16, 28, 0.7);
+            backdrop-filter: blur(14px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 120, 200, 0.5);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 100, 180, 0.3);
+            overflow: hidden;
+            padding: 1.8rem 2rem 2rem 2rem;
+        }
+
+        /* профиль */
+        .profile-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.5rem;
+            border-bottom: 2px dashed #b23b7a;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            background: #2e1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid #ff77b3;
+            box-shadow: 0 0 15px rgba(255, 100, 180, 0.6);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .name h1 {
+            font-size: 2.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #ffb3d9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .name p {
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .badge {
+            background: #2e1a2ecc;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            border: 1px solid #e085b5;
+            margin-left: auto;
+        }
+
+        .bio {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 12px 22px;
+            border-radius: 60px;
+            margin-bottom: 28px;
+            backdrop-filter: blur(4px);
+            border-left: 5px solid #ff88c6;
+            width: 100%;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            line-height: 1.4;
+        }
+
+        /* ЖИРНЫЙ ЗАГОЛОВОК КИНН */
+        .kinn-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #ffb3d9;
+            text-shadow: 0 0 8px #ff77b3;
+            margin: 10px 0 15px 0;
+            font-family: 'Segoe UI', 'Inter', monospace;
+        }
+
+        /* табы — НОВЫЙ ПОРЯДОК */
+        .tabs-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            border-bottom: 1px solid #8a3f6b;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            background: transparent;
+            border: none;
+            color: #ffcce8;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: monospace;
+        }
+
+        .tab i {
+            margin-right: 6px;
+        }
+
+        .tab:hover {
+            background: rgba(255, 100, 180, 0.35);
+            color: white;
+        }
+
+        .tab.active {
+            background: #ff66b5;
+            color: white;
+            box-shadow: 0 3px 12px rgba(255, 80, 160, 0.6);
+        }
+
+        .pane {
+            display: none;
+            animation: fade 0.2s ease;
+        }
+
+        .pane.active-pane {
+            display: block;
+        }
+
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(6px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .info-card {
+            background: rgba(28, 12, 28, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 1.4rem;
+            padding: 1rem 1.2rem;
+            border: 1px solid #c96197;
+        }
+
+        .info-card h3 {
+            font-size: 1.25rem;
+            border-left: 4px solid #ff88c6;
+            padding-left: 12px;
+            margin-bottom: 12px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #2e1a2e;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            border: 1px solid #b84d82;
+            color: #ffe0f0;
+        }
+
+        /* ГАЛЕРЕЯ */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+            justify-content: center;
+        }
+
+        .gallery img {
+            width: 105px;
+            height: 105px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 2px solid #ff88c6;
+            transition: 0.15s;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.02);
+            border-color: #ffb0da;
+            box-shadow: 0 0 10px #ff80be;
+        }
+
+        /* LOVE LIST стили */
+        .love-actions {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 1rem 0 1.5rem;
+            flex-wrap: wrap;
+        }
+        .love-btn {
+            background: linear-gradient(145deg, #2e1a2e, #1f0f1f);
+            border: 2px solid #ff88c6;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffcce8;
+            cursor: pointer;
+            transition: 0.2s;
+            backdrop-filter: blur(5px);
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+        .love-btn:hover {
+            background: #ff66b5;
+            color: white;
+            transform: scale(1.02);
+            box-shadow: 0 0 15px #ff77b3;
+        }
+        .love-card {
+            background: rgba(28, 12, 28, 0.9);
+            border-radius: 2rem;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #ff88c6;
+            margin-top: 15px;
+        }
+        .love-banner {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 1.2rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ff99cc;
+        }
+        .love-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #fff, #ffb3d9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 10px 0;
+        }
+        .love-names {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            font-size: 1.1rem;
+            padding: 0.5rem;
+        }
+        .love-names span {
+            background: #2e1a2e;
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: 1px solid #ff88c6;
+        }
+
+        /* музыкальный плеер (чистый) */
+        .music-player-card {
+            background: linear-gradient(145deg, #0d1228, #050815);
+            border-radius: 2rem;
+            margin-top: 24px;
+            padding: 18px 20px;
+            border: 1px solid #c96197;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        .track-header {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .track-cover {
+            width: 65px;
+            height: 65px;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 2px solid #ff88c6;
+        }
+        .track-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .track-info h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #ffe0f0;
+        }
+        .track-info p {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            font-family: monospace;
+        }
+        .time-progress {
+            margin: 18px 0 8px;
+        }
+        .time-numbers {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            font-family: monospace;
+            margin-bottom: 6px;
+            color: #e28fb8;
+        }
+        .progress-bar-bg {
+            background: #3a2a4a;
+            border-radius: 20px;
+            height: 5px;
+            width: 100%;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #ff88c6, #ffb3d9);
+            width: 42%;
+            height: 100%;
+            border-radius: 20px;
+        }
+        .action-icons {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-top: 16px;
+            color: #ffcce8;
+        }
+        .action-icons i {
+            font-size: 1.4rem;
+            cursor: default;
+            opacity: 0.8;
+        }
+
+        /* ссылки */
+        .links-line {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-family: monospace;
+        }
+        .links-line a {
+            color: #ffbbdd;
+            text-decoration: none;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .links-line a:hover {
+            color: white;
+            text-shadow: 0 0 6px #ff77b3;
+        }
+        .system-status {
+            font-family: monospace;
+            margin-top: 1rem;
+            color: #e28fb8;
+            font-size: 0.7rem;
+            text-align: center;
+        }
+        hr {
+            border-color: #a14778;
+            margin: 12px 0;
+        }
+        .footer-note {
+            font-size: 0.8rem;
+            text-align: center;
+            opacity: 0.8;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 680px) {
+            .main-container {
+                padding: 1rem;
+            }
+            .name h1 {
+                font-size: 1.8rem;
+            }
+            .gallery img {
+                width: 75px;
+                height: 75px;
+            }
+            .love-btn {
+                padding: 0.6rem 1rem;
+                font-size: 1rem;
+            }
+            .kinn-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<div class="main-container">
+    <!-- шапка -->
+    <div class="profile-header">
+        <div class="avatar">
+            <img src="https://i.ibb.co/WW31HdnD/photo-6312261075444895520-y.jpg" alt="аватар">
+        </div>
+        <div class="name">
+            <h1>Лера</h1>
+            <p><i class="fas fa-birthday-cake"></i> 17 лет • 16.04</p>
+        </div>
+        <div class="badge">
+            𓆩♱𓆪 𝖘𝖍𝖊 / 𝖍𝖊𝖗 𓆩♱𓆪
+        </div>
+    </div>
+
+    <div class="bio">
+        ☁️ 𓏲 ࣪₊ 𝓁𝑜𝓋𝑒: роллы 𐩐 и музыка 𓏢 ⑅ ꒰ 𝆤֟፝ ꒱ занимаюсь рисованием ✐ и программированием 𓇗 ✧ 𓍢 ࣪˖ 🦢
+    </div>
+
+    <!-- ЖИРНЫЙ ЗАГОЛОВОК КИНН СВЕТЛО-РОЗОВЫМ -->
+    <div class="kinn-title">КИНН</div>
+
+    <!-- ГАЛЕРЕЯ С ФОТО (как на скрине) -->
+    <div class="gallery">
+        <img src="https://i.ibb.co/rfNxFHT7/photo-6314156607721383793-y.jpg" alt="фото1">
+        <img src="https://i.ibb.co/C5Msqkxn/photo-6314156607721383794-x.jpg" alt="фото2">
+        <img src="https://i.ibb.co/WNJQgWsf/photo-6314156607721383795-x.jpg" alt="фото3">
+        <img src="https://i.ibb.co/46RZ6Bq/photo-6314156607721383796-x.jpg" alt="фото4">
+        <img src="https://i.ibb.co/b577Sfnw/photo-6314156607721383797-x.jpg" alt="фото5">
+    </div>
+
+    <!-- ТАБЫ (НОВЫЙ ПОРЯДОК: Новеллы → Музыка → LOVE LIST → остальные) -->
+    <div class="tabs-row">
+        <button class="tab active" data-tab="novel"><i class="fas fa-book-open"></i> Новеллы</button>
+        <button class="tab" data-tab="music"><i class="fas fa-headphones"></i> Музыка</button>
+        <button class="tab" data-tab="lovelist"><i class="fas fa-heart"></i> LOVE LIST</button>
+        <button class="tab" data-tab="games"><i class="fas fa-gamepad"></i> Игры</button>
+        <button class="tab" data-tab="films"><i class="fas fa-film"></i> Фильмы</button>
+        <button class="tab" data-tab="anime"><i class="fas fa-dragon"></i> Аниме</button>
+        <button class="tab" data-tab="serial"><i class="fas fa-tv"></i> Сериалы</button>
+        <button class="tab" data-tab="video"><i class="fas fa-video"></i> Видосики</button>
+        <button class="tab" data-tab="streamers"><i class="fas fa-stream"></i> Стримеры</button>
+        <button class="tab" data-tab="cartoons"><i class="fas fa-child"></i> Мультики</button>
+        <button class="tab" data-tab="artists"><i class="fas fa-microphone-alt"></i> Авторы</button>
+        <button class="tab" data-tab="manga"><i class="fas fa-book"></i> Манга/Книги</button>
+    </div>
+
+    <!-- НОВЕЛЛЫ -->
+    <div id="novel" class="pane active-pane">
+        <div class="info-card"><h3>影 ִ люби𝕞ые но𝕧еллы ִ 𞥊 ̸⃟ 𓏲 𝄄</h3><div class="tags"><span class="tag">Литературный клуб</span><span class="tag">nina</span><span class="tag">Бесконечное лето</span><span class="tag">Зайчик</span><span class="tag">Мой новый парень - маньяк</span><span class="tag">boyfriend to death</span><span class="tag">the promise of hope</span><span class="tag">loopers</span><span class="tag">fresh blood</span><span class="tag">the coffin of Andy and Leyley</span><span class="tag">Lurking for love</span><span class="tag">broken colors</span></div></div>
+    </div>
+
+    <!-- МУЗЫКА (чистый плеер) -->
+    <div id="music" class="pane">
+        <div class="music-player-card">
+            <div class="track-header">
+                <div class="track-cover">
+                    <img src="https://i.ibb.co/NgVZv7mW/f33889eadb5f480f0b45a189a23439ea-1000x1000x1.png" alt="обложка">
+                </div>
+                <div class="track-info">
+                    <h4>Исповедь — ооеs</h4>
+                    <p><i class="fas fa-microphone-alt"></i> single · 2025</p>
+                </div>
+            </div>
+            <div class="time-progress">
+                <div class="time-numbers"><span>0:00</span><span>-2:33</span></div>
+                <div class="progress-bar-bg"><div class="progress-fill" style="width: 0%;"></div></div>
+            </div>
+            <div class="action-icons">
+                <i class="fas fa-backward-step"></i>
+                <i class="fas fa-play-circle" style="font-size: 1.8rem; color:#ff88c6;"></i>
+                <i class="fas fa-forward-step"></i>
+                <i class="fas fa-volume-up"></i>
+            </div>
+            <div style="text-align: right; font-size: 0.7rem; margin-top: 8px; opacity:0.6;">◉ now playing</div>
+        </div>
+        <div class="info-card" style="margin-top: 15px;"><h3>🎧影 ִ люби𝕞ые т𝕡е𝕜и ִ 𞥊 ̸⃟ 𓏲 𝄄</h3><div class="tags"><span class="tag">miatriass - взлом</span><span class="tag">enemy</span><span class="tag">rumors</span><span class="tag">happy face</span><span class="tag">культ тела</span><span class="tag">where shall we go?</span><span class="tag">nightcore</span></div></div>
+    </div>
+
+    <!-- LOVE LIST панель -->
+    <div id="lovelist" class="pane">
+        <div class="love-actions">
+            <button class="love-btn" id="showLoveBtn">➔ ✧ 𝕃𝕆𝕍𝔼:</button>
+            <button class="love-btn" id="showFriendsBtn">➔ ✧ 𝔽ℝ𝕀𝔼ℕ𝔻𝕊:</button>
+        </div>
+        <div id="loveContent"></div>
+    </div>
+
+    <!-- ИГРЫ -->
+    <div id="games" class="pane">
+        <div class="info-card"><h3>影 ִ иг𝕡ы ִ 𞥊 ̸⃟ 𓏲 𝄄</h3><div class="tags"><span class="tag">the last of us</span><span class="tag">life is strange</span><span class="tag">metro2033</span><span class="tag">cyberpunk2077</span><span class="tag">little nightmares</span><span class="tag">Андертал</span><span class="tag">Яндер симулятор</span><span class="tag">Needy girl overdose</span><span class="tag">Фнаф</span><span class="tag">Minecraft</span><span class="tag">геншин</span><span class="tag">Danganronpa</span><span class="tag">omori</span><span class="tag">sally face</span><span class="tag">miside</span></div></div>
+    </div>
+
+    <!-- ФИЛЬМЫ -->
+    <div id="films" class="pane">
+        <div class="info-card"><h3>影 ִ 𝕗иль𝕞и ִ 𞥊 ̸⃟ 𓏲 𝄄</h3><div class="tags"><span class="tag">Человек паук</span><span class="tag">головоломка</span><span class="tag">один дома</span><span class="tag">Чернобыль. Зона отчуждения</span><span class="tag">все умрут а я останусь</span><span class="tag">аркейн</span><span class="tag">слово пацана</span><span class="tag">плакса</span><span class="tag">титаник</span></div></div>
+    </div>
+
+    <!-- АНИМЕ -->
+    <div id="anime" class="pane">
+        <div class="info-card"><h3>影 ִ 𝕒ни𝕞е ִ 𞥊 ̸⃟ 𓏲 𝄄</h3><div class="tags"><span class="tag">Наруто</span><span class="tag">магическая битва</span><span class="tag">человек бензопила</span><span class="tag">Токийский гуль</span><span class="tag">Евангелион</span><span class="tag">Клинок рассекающий демонов</span><span class="tag">Великий из бродячих псов</span></div></div>
+    </div>
+
+    <!-- СЕРИАЛЫ -->
+    <div id="serial" class="pane"><div class="info-card"><h3>影 ִ 𝕔ериалы ִ 𞥊 ̸⃟ 𓏲 𝄄</h3><div class="tags"><span class="tag">кухня</span><span class="tag">школа</span><span class="tag">Лили навсегда</span><span class="tag">пацанки</span></div></div></div>
+
+    <!-- ВИДОСИКИ -->
+    <div id="video" class="pane"><div class="info-card"><h3>影 ִ 𝕧идо𝕔и𝕜и ִ 𞥊 ̸⃟ 𓏲 𝄄</h3><div class="tags"><span class="tag">alien stage</span><span class="tag">парадеевич</span><span class="tag">Ena</span><span class="tag">дух моей общаги</span><span class="tag">отель хазбин</span><span class="tag">адский босс</span></div></div></div>
+
+    <!-- СТРИМЕРЫ -->
+    <div id="streamers" class="pane"><div class="info-card"><h3>影 ִ 𝕔три𝕞еры ִ 𞥊 ̸⃟ 𓏲 𝄄</h3><div class="tags"><span class="tag">Тоха(t2x2)</span><span class="tag">Дрейк</span><span class="tag">Стинт</span><span class="tag">Дипинс</span></div></div></div>
+
+    <!-- МУЛЬТИКИ -->
+    <div id="cartoons" class="pane"><div class="info-card"><h3>影 ִ м𝕪льти𝕜и ִ 𞥊 ̸⃟ 𓏲 𝄄</h3><div class="tags"><span class="tag">Вселенная Стивена</span><span class="tag">леди баг</span><span class="tag">my little pony</span><span class="tag">гамбол</span><span class="tag">время приключений</span></div></div></div>
+
+    <!-- АВТОРЫ -->
+    <div id="artists" class="pane"><div class="info-card"><h3>影 ִ г𝕡𝕪ппа ִ 𞥊 ̸⃟ 𓏲 𝄄</h3><div class="tags"><span class="tag">Ado</span><span class="tag">Miatriass</span><span class="tag">deco*27</span><span class="tag">vocaloid</span></div></div></div>
+
+    <!-- МАНГА/КНИГИ -->
+    <div id="manga" class="pane"><div class="info-card"><h3>影 ִ 𝕞анга и 𝕜нига ִ 𞥊 ̸⃟ 𓏲 𝄄</h3><div class="tags"><span class="tag">Учитель, я без ума от вас</span><span class="tag">дневник плохих мыслей</span><span class="tag">лето в пионерском галстуке</span><span class="tag">лисья нора</span></div></div></div>
+
+    <!-- СОЦСЕТИ -->
+    <div class="links-line">
+        <a href="#"><i class="fab fa-telegram-plane"></i> tgk: @felanir_acc</a>
+        <a href="#"><i class="fab fa-instagram"></i> inst: @felanir_acc</a>
+        <a href="#"><i class="fab fa-tiktok"></i> tiktok: @kisryla</a>
+    </div>
+
+    <div class="system-status">⟳ System Loading ...</div>
+    <hr />
+    <div class="footer-note">🍣 🧋 𝄄 𝓁𝑜𝓋𝑒 𝓈𝓊𝓈𝒽𝒾 𝓉𝑜 𝓉𝒽𝑒 𝓂𝑜𝑜𝓃 𝒶𝓃𝒹 𝒷𝒶𝒸𝓀.</div>
+    <div class="footer-note" style="margin-top: 5px; font-size: 0.7rem;">⊹ ࣪ ˖ 🎧 𝗠𝘂𝘀𝗶𝗰 is my escape.</div>
+</div>
+
+<script>
+    // управление вкладками
+    const tabs = document.querySelectorAll('.tab');
+    const panes = document.querySelectorAll('.pane');
+
+    function setActive(panelId) {
+        panes.forEach(p => p.classList.remove('active-pane'));
+        const target = document.getElementById(panelId);
+        if (target) target.classList.add('active-pane');
+        tabs.forEach(tab => {
+            const tabVal = tab.getAttribute('data-tab');
+            if (tabVal === panelId) tab.classList.add('active');
+            else tab.classList.remove('active');
+        });
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const id = tab.getAttribute('data-tab');
+            if (id) setActive(id);
+        });
+    });
+
+    const activeTab = document.querySelector('.tab.active');
+    if (activeTab) setActive(activeTab.getAttribute('data-tab'));
+
+    let dot = 0;
+    const statusDiv = document.querySelector('.system-status');
+    if (statusDiv) {
+        setInterval(() => {
+            dot = (dot % 3) + 1;
+            statusDiv.innerHTML = `⟳ System Loading${'.'.repeat(dot)} <i class="fas fa-sync-alt fa-fw"></i>`;
+        }, 800);
+    }
+
+    // ссылки
+    const tgLink = document.querySelector('.links-line a:nth-child(1)');
+    const instLink = document.querySelector('.links-line a:nth-child(2)');
+    const ttLink = document.querySelector('.links-line a:nth-child(3)');
+    if (tgLink) tgLink.href = "https://t.me/felanir_acc";
+    if (instLink) instLink.href = "https://instagram.com/felanir_acc";
+    if (ttLink) ttLink.href = "https://tiktok.com/@kisryla";
+
+    // LOVE LIST логика
+    const loveContainer = document.getElementById('loveContent');
+    const loveBtn = document.getElementById('showLoveBtn');
+    const friendsBtn = document.getElementById('showFriendsBtn');
+
+    function renderLove() {
+        loveContainer.innerHTML = `
+            <div class="love-card">
+                <img class="love-banner" src="https://i.ibb.co/pv7gtNp3/c4901dddc98b7560055a67c830a1a2d8.jpg" alt="love banner">
+                <div class="love-title">︶⊹︶︶୨ # : MY LOVES :: ୧︶︶⊹︶</div>
+                <div class="love-names">
+                    <span>𝓂𝒶𝓇𝒾𝒶 𝓈𝒾𝓈𝓉𝑒𝓇</span>
+                    <span>𝓃𝒶𝓈𝓉𝓎𝒶</span>
+                </div>
+                <div style="font-size:0.8rem; margin-top:10px;">𓏲࣪ 🌸</div>
+            </div>
+        `;
+    }
+
+    function renderFriends() {
+        loveContainer.innerHTML = `
+            <div class="love-card">
+                <img class="love-banner" src="https://i.ibb.co/C5Wqmjz4/image.jpg" alt="friends banner">
+                <div class="love-title">︶⊹︶︶୨ # : MY FRIENDS :: ୧︶︶⊹︶</div>
+                <div class="love-names">
+                    <span>𝓪𝓻𝓲𝓷𝓪 𓏲</span>
+                    <span>𝔂𝓾𝓵𝓲𝓪 ৎ</span>
+                    <span>𝓶𝓲𝓵𝓪𝓷𝓪 𓄹࣪</span>
+                </div>
+                <div style="font-size:0.8rem; margin-top:10px;">𓍢 ࣪˖ ✧ 9⭒ ︶⊹︶ ✧ ︶⊹︶ ⭒୧</div>
+            </div>
+        `;
+    }
+
+    if (loveBtn) loveBtn.addEventListener('click', renderLove);
+    if (friendsBtn) friendsBtn.addEventListener('click', renderFriends);
+    if (loveContainer) renderLove();
+</script>
+
+</body>
+</html>
